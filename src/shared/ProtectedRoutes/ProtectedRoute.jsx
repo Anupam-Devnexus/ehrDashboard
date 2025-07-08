@@ -1,17 +1,13 @@
+import { Navigate, Outlet } from "react-router-dom";
 
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+const ProtectedRoute = ({ allowedRole }) => {
+  const role = localStorage.getItem("role");
 
-export default function ProtectedRoute({ allowedRole }) {
-    const role = localStorage.getItem("role");
-    const location = useLocation();
-
-    if (!role) {
-        return <Navigate to="/" replace />;
-    }
-
-    if (role !== allowedRole) {
-        return <Navigate to={`/dashboard/${role}`} replace />;
-    }
-
+  if (role === allowedRole) {
     return <Outlet />;
-}
+  } else {
+    return <Navigate to="/" replace />;
+  }
+};
+
+export default ProtectedRoute;

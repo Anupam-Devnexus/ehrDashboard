@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Mock users for demo
 const users = [
   { id: "Admin123", password: "345", role: "admin" },
   { id: "HR123", password: "hrpass", role: "hr" },
   { id: "Subadmin123", password: "456", role: "subadmin" },
   { id: "Accounts123", password: "accpass", role: "accounts" },
   { id: "Employee123", password: "emppass", role: "employee" },
-  { id: "TourMgr123", password: "tour123", role: "tour-manager" },
-  { id: "Recruit123", password: "hireme", role: "recruiter" },
-  { id: "Guide123", password: "guidepass", role: "guide" },
-  { id: "Driver123", password: "drive123", role: "driver" },
-  { id: "Support123", password: "help123", role: "support" },
-  { id: "Trainer123", password: "trainme", role: "trainer" },
 ];
 
 export default function Login() {
@@ -23,6 +16,7 @@ export default function Login() {
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    if (error) setError("");
   };
 
   const handleLogin = (e) => {
@@ -30,7 +24,6 @@ export default function Login() {
     const user = users.find(
       (u) => u.id === credentials.id && u.password === credentials.password
     );
-
     if (user) {
       localStorage.setItem("role", user.role);
       localStorage.setItem("userID", user.id);
@@ -41,56 +34,122 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-r from-sky-100 via-blue-100 to-blue-200 px-4">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-md overflow-hidden">
-        <div className="bg-blue-600 py-6 px-8 text-white text-center">
-          <h1 className="text-3xl font-bold tracking-wide">Fantastic Fare</h1>
-          <p className="text-sm mt-1">Tour & Travel HRMS Dashboard</p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-cyan-400 to-indigo-600 flex items-center justify-center px-6 py-12">
+      <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden relative">
+        {/* Accent bar on left */}
+        <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-cyan-600 via-indigo-700 to-purple-700 rounded-l-3xl"></div>
 
-        <div className="p-8">
-          {error && <p className="text-red-600 text-center mb-4">{error}</p>}
+        <div className="p-10">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <img
+              src="/logo.webp"
+              alt="Tour & Travel Logo"
+              className="h-16 w-auto object-contain"
+            />
+          </div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          {/* Heading */}
+          <h1 className="text-3xl font-extrabold text-center text-indigo-700 mb-2 tracking-wide">
+            Welcome Back
+          </h1>
+          <p className="text-center text-indigo-500 font-semibold mb-8">
+            Tour & Travel HRMS Dashboard
+          </p>
+
+          {/* Error message */}
+          {error && (
+            <p className="mb-6 text-center text-red-600 font-semibold animate-pulse select-none">
+              {error}
+            </p>
+          )}
+
+          {/* Login form */}
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">User ID</label>
+              <label
+                htmlFor="id"
+                className="block text-indigo-700 font-medium mb-2"
+              >
+                User ID
+              </label>
               <input
                 type="text"
+                id="id"
                 name="id"
                 value={credentials.id}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                placeholder="e.g. Admin123"
+                placeholder="Enter your User ID"
                 required
+                className={`w-full px-4 py-3 rounded-xl border border-indigo-300 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-400 transition outline-none text-indigo-900 ${
+                  error ? "ring-2 ring-red-400" : ""
+                }`}
               />
             </div>
+
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">Password</label>
+              <label
+                htmlFor="password"
+                className="block text-indigo-700 font-medium mb-2"
+              >
+                Password
+              </label>
               <input
                 type="password"
+                id="password"
                 name="password"
                 value={credentials.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 placeholder="Enter your password"
                 required
+                className={`w-full px-4 py-3 rounded-xl border border-indigo-300 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-400 transition outline-none text-indigo-900 ${
+                  error ? "ring-2 ring-red-400" : ""
+                }`}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-black font-medium py-2 rounded-md shadow-lg transition duration-300"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold text-lg hover:from-cyan-600 hover:to-indigo-700 transition shadow-lg"
             >
               Login
             </button>
           </form>
 
-          <div className="mt-6 text-xs text-gray-500 text-center">
-            <p>Demo Credentials</p>
-            <ul className="mt-1 space-y-1">
-              <li>Admin: <strong>Admin123 / 345</strong></li>
-              <li>HR: <strong>HR123 / hrpass</strong></li>
-              <li>Employee: <strong>Employee123 / emppass</strong></li>
+          {/* Demo credentials */}
+          <div className="mt-10 text-center text-indigo-700 text-sm">
+            <p className="font-semibold mb-4">Demo Credentials</p>
+            <ul className="space-y-1">
+              <li>
+                <span className="font-semibold">Admin:</span>{" "}
+                <span className="font-mono bg-indigo-100 px-2 py-1 rounded text-indigo-800">
+                  Admin123 / 345
+                </span>
+              </li>
+              <li>
+                <span className="font-semibold">HR:</span>{" "}
+                <span className="font-mono bg-indigo-100 px-2 py-1 rounded text-indigo-800">
+                  HR123 / hrpass
+                </span>
+              </li>
+              <li>
+                <span className="font-semibold">Employee:</span>{" "}
+                <span className="font-mono bg-indigo-100 px-2 py-1 rounded text-indigo-800">
+                  Employee123 / emppass
+                </span>
+              </li>
+              <li>
+                <span className="font-semibold">Subadmin:</span>{" "}
+                <span className="font-mono bg-indigo-100 px-2 py-1 rounded text-indigo-800">
+                  Subadmin123 / 456
+                </span>
+              </li>
+              <li>
+                <span className="font-semibold">Accounts:</span>{" "}
+                <span className="font-mono bg-indigo-100 px-2 py-1 rounded text-indigo-800">
+                  Accounts123 / accpass
+                </span>
+              </li>
             </ul>
           </div>
         </div>
