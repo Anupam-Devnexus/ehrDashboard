@@ -30,9 +30,15 @@ const roleNavItems = {
     { label: "Payslips", path: "/dashboard/accounts/payslips" },
   ],
   employee: [
-    { label: "Dashboard", path: "/dashboard/employee" },
-    { label: "My Tasks", path: "/dashboard/employee/tasks" },
-    { label: "Leave", path: "/dashboard/employee/leave" },
+     { label: "Dashboard", path: "/dashboard/employee" },
+    { label: "Schedules", path: "/dashboard/employee/schedules" },
+    { label: "Presence", path: "/dashboard/employee/presence" },
+    { label: "Tasks", path: "/dashboard/employee/tasks" },
+    { label: "Messages", path: "/dashboard/employee/messages" },
+    { label: "Performance", path: "/dashboard/employee/performance" },
+    { label: "Documents", path: "/dashboard/employee/documents" },
+    { label: "Support", path: "/dashboard/employee/support" },
+    { label: "Payslips", path: "/dashboard/employee/payslips" },
   ],
 };
 
@@ -48,10 +54,10 @@ const Navigationbar = () => {
   const navItems = roleNavItems[role] || [];
 
   return (
-    <nav className="bg-white h-screen w-32 shadow-lg flex flex-col justify-between sticky top-0">
+    <nav className="bg-white h-screen w-42 shadow-lg flex flex-col justify-between sticky top-0">
       {/* Logo / Brand */}
-      <div className="px-8 py-6 border-b border-gray-200">
-        <img src="/logo.webp" alt="logo" />
+      <div className="px-1 py-4 flex justify-center items-center">
+        <img src="/logo.webp" alt="logo"  className="h-full"/>
       </div>
 
       {/* Navigation Links */}
@@ -73,7 +79,7 @@ const Navigationbar = () => {
       <div className="px-6 pb-6">
         <button
           onClick={handleLogout}
-          className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md shadow-md font-semibold transition"
+          className="w-full bg-red-600 cursor-pointer hover:bg-red-700 text-white py-2 rounded-md shadow-md font-semibold transition"
         >
           Logout
         </button>
